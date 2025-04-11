@@ -5,7 +5,7 @@ import com.ecommerce.entity.Product;
 
 import java.util.List;
 
-interface CartService {
+public interface CartService {
     List<Cart> getAllCartProducts(String userid);
     Product addProductToCart(Cart cart);
     void removeProductFromCart(String pid, Cart cart);
