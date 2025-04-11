@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
 @AllArgsConstructor
+@RestController
 @RequestMapping("/user")
 public class UserControllerTest {
 
@@ -38,8 +38,7 @@ public class UserControllerTest {
     }
 
     @PutMapping("/update/{userid}")
-    public ResponseEntity<User> deleteUser(@PathVariable String userid, @RequestBody User user) {
-
+    public ResponseEntity<User> updateUser(@PathVariable String userid, @RequestBody User user) {
         return new ResponseEntity<>(
                 userService.updateUser(userid, user),
                 HttpStatus.OK
@@ -48,7 +47,6 @@ public class UserControllerTest {
 
     @GetMapping("/signin")
     public ResponseEntity<Boolean> signIn(@RequestBody @Valid User user) {
-
         return new ResponseEntity<>(
                 userService.isAuthenticated(user),
                 HttpStatus.OK

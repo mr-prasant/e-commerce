@@ -65,8 +65,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProductsByUserid(String userid) {
-        List<Product> productList = productRepository.findByUserUserid(userid);
-        if (productList == null || productList.isEmpty()) {
+        List<Product> productList = productRepository.findAllById(Collections.singleton(userid));
+        if (productList.isEmpty()) {
             throw new ResourceNotFoundException("Product not found!");
         }
 

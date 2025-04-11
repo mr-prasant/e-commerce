@@ -1,20 +1,22 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.entity.Product;
-import com.ecommerce.service.impl.ProductServiceImpl;
+import com.ecommerce.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @AllArgsConstructor
 @RequestMapping("/product")
 public class ProductControllerTest {
 
-    private ProductServiceImpl productService;
+    private ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProduct() {
@@ -24,7 +26,7 @@ public class ProductControllerTest {
         );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{pid}")
     public ResponseEntity<Product> getProductById(@PathVariable String pid) {
         return new ResponseEntity<>(
                 productService.getProductById(pid),
@@ -60,7 +62,7 @@ public class ProductControllerTest {
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         return new ResponseEntity<>(
                 productService.addProduct(product),
-                HttpStatus.FOUND
+                HttpStatus.CREATED
         );
     }
 
@@ -68,7 +70,7 @@ public class ProductControllerTest {
     public ResponseEntity<Product> updateProduct(@PathVariable String pid, @RequestBody Product product) {
         return new ResponseEntity<>(
                 productService.updateProduct(pid, product),
-                HttpStatus.FOUND
+                HttpStatus.OK
         );
     }
 
