@@ -1,3 +1,4 @@
+com\ecommerce\controller\ProductControllerTest.class
 com\ecommerce\service\SignedInUserService.class
 com\ecommerce\entity\Product.class
 com\ecommerce\exception\ResourceNotFoundException.class
@@ -14,6 +15,7 @@ com\ecommerce\service\CartService.class
 com\ecommerce\exception\InvalidInputResourceException.class
 com\ecommerce\service\UserService.class
 com\ecommerce\repository\SignedInUserRepository.class
+com\ecommerce\utility\ServiceUtil.class
 com\ecommerce\entity\Transaction.class
 com\ecommerce\entity\SignedInUser.class
 com\ecommerce\repository\TransactionRepository.class
@@ -25,6 +27,7 @@ com\ecommerce\repository\UserRepository.class
 com\ecommerce\controller\UserControllerTest.class
 com\ecommerce\exception\NullResourceException.class
 com\ecommerce\entity\UserDemand.class
+com\ecommerce\service\impl\ProductServiceImpl.class
 com\ecommerce\entity\Order.class
 com\ecommerce\entity\User.class
 com\ecommerce\repository\CartRepository.class
