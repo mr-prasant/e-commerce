@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProductsByUserid(String userid) {
         List<Product> productList = productRepository.findAllById(Collections.singleton(userid));
-        if (productList == null) {
+        if (productList.isEmpty()) {
             throw new ResourceNotFoundException("Product not found!");
         }
 
@@ -122,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public byte[] getProductImage(String pid) {
-        return productRepository.findImageById(pid);
+        return productRepository.findImageByPid(pid);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean isProductAvailable(String pid) {
-        int available = productRepository.findIsAvailableById(pid);
+        int available = productRepository.findIsAvailableByPid(pid);
         return available == 1;
     }
 }

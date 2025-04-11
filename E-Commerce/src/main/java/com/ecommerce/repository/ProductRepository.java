@@ -19,8 +19,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query("SELECT p.quantity FROM Product p WHERE p.pid = ?1")
     int getQuantityByPid(String pid);
 
-    byte[] findImageById(String pid);
+    byte[] findImageByPid(String pid);
 
-    int findIsAvailableById(String pid);
+    int findIsAvailableByPid(String pid);
 }
 
