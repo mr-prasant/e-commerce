@@ -28,9 +28,11 @@ public class UserControllerTest {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteUser(@RequestBody @Valid User user) {
+        String userid = user.getUserid();
+
         userService.removeUser(user);
         return new ResponseEntity<>(
-                "user deleted: " + user.getUserid(),
+                "user deleted: " + userid,
                 HttpStatus.OK
         );
     }
