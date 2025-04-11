@@ -12,47 +12,47 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @NotBlank(message="Email is required")
-    @Email(message="Invalid mail format")
+    @Id
+    @Email(message = "Invalid email format")
+    @Column(nullable = false, unique = true)
     private String userid;
 
-    @NotBlank(message="Password is required")
+    @NotBlank(message = "Password is required")
+    @Column(nullable = false)
     private String password;
 
-    @NotBlank(message="Role is required")
-    private String role;
+    @NotBlank(message = "Role is required")
+    @Column(nullable = false)
+    private String roles;
 
-    // Mapping to SignedInUsers
+    // Mapping to SignedInUser
     @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SignedInUser signedInUser;
 
-    // Mapping to UserDetails
+    // Mapping to UserDetail
     @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserDetail userDetail;
 
     // One-to-Many with Product
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products;
 
     // One-to-Many with Order
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
     // One-to-Many with Cart
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cart> carts;
 
     // One-to-Many with Transaction
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 }

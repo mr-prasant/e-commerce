@@ -11,6 +11,7 @@ public class SignedInUser {
     private String userid;
 
     private String token;
+    private String role;
     private Long time;
 
     @OneToOne

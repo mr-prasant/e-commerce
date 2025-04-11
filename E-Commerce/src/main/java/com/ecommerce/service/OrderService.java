@@ -4,7 +4,7 @@ import com.ecommerce.entity.Order;
 
 import java.util.List;
 
-interface OrderService {
+public interface OrderService {
     Order addOrder(Order order);
     Order updateOrder(String oid, Order order);
     void removeOrder(String oid);
