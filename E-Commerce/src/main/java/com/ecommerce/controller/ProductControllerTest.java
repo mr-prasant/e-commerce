@@ -3,7 +3,6 @@ package com.ecommerce.controller;
 import com.ecommerce.entity.Product;
 import com.ecommerce.service.ProductService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
