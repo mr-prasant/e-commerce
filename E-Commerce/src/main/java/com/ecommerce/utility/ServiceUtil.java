@@ -1,5 +1,6 @@
 package com.ecommerce.utility;
 
+import com.ecommerce.exception.InvalidInputResourceException;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -12,5 +13,11 @@ public class ServiceUtil {
         int randomNumber = ThreadLocalRandom.current().nextInt(100000, 10000001);
 
         return prefix + timestamp + randomNumber;
+    }
+
+    public void verifyUserRole(String role) {
+        if (!role.equals("admin") && !role.equals("user")) {
+            throw new InvalidInputResourceException("Invalid role: " + role);
+        }
     }
 }
