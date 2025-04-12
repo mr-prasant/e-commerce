@@ -7,6 +7,7 @@ import com.ecommerce.exception.ResourceAlreadyExistException;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.repository.UserRepository;
 import com.ecommerce.service.UserService;
+import com.ecommerce.utility.ServiceUtil;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,11 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ServiceUtil serviceUtil;
 
     private final PasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, ServiceUtil serviceUtil) {
         this.userRepository = userRepository;
+        this.serviceUtil = serviceUtil;
     }
 
     @Override
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(role);
 
         // verifying user role
-        verifyUserRole(role);
+        serviceUtil.verifyUserRole(role);
 
         User dbUser = getUser(user.getUserid());
 
@@ -78,7 +81,7 @@ public class UserServiceImpl implements UserService {
         User dbUser = getUser(user.getUserid());
 
         String role = user.getRoles();
-        verifyUserRole(role);
+        serviceUtil.verifyUserRole(role);
 
         String[] dbRoles = dbUser.getRoles().split(",");
         String updatedRole = "";
@@ -113,7 +116,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isAuthenticated(User user) {
         clean(user); // cleaning the user data
-        verifyUserRole(user.getRoles());
+        serviceUtil.verifyUserRole(user.getRoles());
 
         User dbUser = getUser(user.getUserid());
 
@@ -145,12 +148,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existUserid(String userid) {
         return userRepository.findById(userid).isPresent();
-    }
-
-    private void verifyUserRole(String role) {
-         if (!role.equals("admin") && !role.equals("user")) {
-             throw new InvalidInputResourceException("Invalid role: " + role);
-         }
     }
 
     private boolean matchPassword(String password, String encPassword) {

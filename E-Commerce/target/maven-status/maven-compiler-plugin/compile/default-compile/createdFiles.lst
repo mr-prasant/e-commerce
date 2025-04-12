@@ -1,5 +1,6 @@
 com\ecommerce\controller\ProductControllerTest.class
 com\ecommerce\service\SignedInUserService.class
+com\ecommerce\controller\UserDetailControllerTest.class
 com\ecommerce\entity\Product.class
 com\ecommerce\exception\ResourceNotFoundException.class
 com\ecommerce\service\ProductService.class
