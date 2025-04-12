@@ -6,5 +6,5 @@ public interface UserDetailService {
     UserDetail registerUserDetail(UserDetail userDetail);
     UserDetail updateUserDetail(String userid, UserDetail userDetail);
     void removeUserDetail(String userid);
-    UserDetail getUserDetailById(String userid);
+    UserDetail getUserDetailByUserid(String userid);
 }

@@ -32,9 +32,9 @@ public class User {
     private SignedInUser signedInUser;
 
     // Mapping to UserDetail
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserDetail userDetail;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private UserDetail userDetail;
 
     // One-to-Many with Product
     @JsonIgnore

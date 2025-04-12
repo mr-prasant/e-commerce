@@ -16,7 +16,7 @@ public class ServiceUtil {
     }
 
     public void verifyUserRole(String role) {
-        if (!role.equals("admin") && !role.equals("user")) {
+        if (!("admin, user, admin").contains(role)) {
             throw new InvalidInputResourceException("Invalid role: " + role);
         }
     }
