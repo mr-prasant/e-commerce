@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -148,6 +150,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existUserid(String userid) {
         return userRepository.findById(userid).isPresent();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     private boolean matchPassword(String password, String encPassword) {

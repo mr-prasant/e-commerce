@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/user")
@@ -49,6 +51,14 @@ public class UserControllerTest {
     public ResponseEntity<Boolean> signIn(@RequestBody @Valid User user) {
         return new ResponseEntity<>(
                 userService.isAuthenticated(user),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(
+                userService.getAllUsers(),
                 HttpStatus.OK
         );
     }
