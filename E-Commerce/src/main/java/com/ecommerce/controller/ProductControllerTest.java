@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("/product")
+@AllArgsConstructor
 public class ProductControllerTest {
 
-    private ProductService productService;
+    ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProduct() {
@@ -24,7 +24,7 @@ public class ProductControllerTest {
         );
     }
 
-    @GetMapping("/{pid}")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable String pid) {
         return new ResponseEntity<>(
                 productService.getProductById(pid),
@@ -60,7 +60,7 @@ public class ProductControllerTest {
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         return new ResponseEntity<>(
                 productService.addProduct(product),
-                HttpStatus.CREATED
+                HttpStatus.FOUND
         );
     }
 
@@ -68,7 +68,7 @@ public class ProductControllerTest {
     public ResponseEntity<Product> updateProduct(@PathVariable String pid, @RequestBody Product product) {
         return new ResponseEntity<>(
                 productService.updateProduct(pid, product),
-                HttpStatus.OK
+                HttpStatus.FOUND
         );
     }
 
