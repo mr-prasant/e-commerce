@@ -8,6 +8,7 @@ com\ecommerce\entity\UserDetail.class
 com\ecommerce\exception\GlobalExceptionHandler.class
 com\ecommerce\service\UserDemandService.class
 com\ecommerce\ECommerceApplication.class
+com\ecommerce\service\impl\UserDetailServiceImpl.class
 com\ecommerce\entity\Cart.class
 com\ecommerce\repository\UserDetailRepository.class
 com\ecommerce\service\UserDetailService.class

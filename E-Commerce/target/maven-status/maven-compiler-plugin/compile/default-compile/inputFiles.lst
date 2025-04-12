@@ -25,6 +25,7 @@ D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\repositor
 D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\repository\UserRepository.java
 D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\service\CartService.java
 D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\service\impl\ProductServiceImpl.java
+D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\service\impl\UserDetailServiceImpl.java
 D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\service\impl\UserServiceImpl.java
 D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\service\OrderService.java
 D:\My Space\Projects\E-Commerce\E-Commerce\src\main\java\com\ecommerce\service\ProductService.java
