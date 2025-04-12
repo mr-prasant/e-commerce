@@ -8,6 +8,7 @@ import com.ecommerce.utility.ServiceUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -65,8 +66,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProductsByUserid(String userid) {
-        List<Product> productList = productRepository.findAllById(Collections.singleton(userid));
-        if (productList.isEmpty()) {
+        List<Product> productList = productRepository.findByUserUserid(userid);
+        if (productList == null || productList.isEmpty()) {
             throw new ResourceNotFoundException("Product not found!");
         }
 
