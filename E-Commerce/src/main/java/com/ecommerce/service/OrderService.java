@@ -13,6 +13,6 @@ public interface OrderService {
     List<Order> getAllUserOrders(String userid);
     boolean isDelivered(String oid);
     String getOrderStatus(String oid);
-    String setOrderStatus(String oid, String status);
+    boolean setOrderStatus(String oid, String status);
     Order getOrderById(String oid);
 }

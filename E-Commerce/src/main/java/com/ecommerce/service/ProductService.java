@@ -17,7 +17,9 @@ public interface ProductService {
     List<Product> getProductBySearch(String search);
     Product getProductById(String pid);
     int getProductQuantity(String pid);
+    boolean setProductQuantity(String pid, int qty);
     byte[] getProductImage(String pid);
     void removeProduct(String pid);
     boolean isProductAvailable(String pid);
+    void setProductAvailable(String pid, int qty);
 }

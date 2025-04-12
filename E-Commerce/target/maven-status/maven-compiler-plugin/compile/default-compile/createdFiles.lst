@@ -1,5 +1,6 @@
 com\ecommerce\controller\ProductControllerTest.class
 com\ecommerce\service\SignedInUserService.class
+com\ecommerce\service\impl\OrderServiceImpl.class
 com\ecommerce\entity\Product.class
 com\ecommerce\exception\ResourceNotFoundException.class
 com\ecommerce\service\ProductService.class
@@ -23,6 +24,7 @@ com\ecommerce\service\impl\UserServiceImpl.class
 com\ecommerce\service\OrderService.class
 com\ecommerce\repository\OrderRepository.class
 com\ecommerce\repository\UserDemandRepository.class
+com\ecommerce\controller\OrderControllerTest.class
 com\ecommerce\repository\UserRepository.class
 com\ecommerce\controller\UserControllerTest.class
 com\ecommerce\exception\NullResourceException.class
