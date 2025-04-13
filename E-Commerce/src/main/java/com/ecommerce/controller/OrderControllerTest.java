@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/order")
 @AllArgsConstructor
+@RequestMapping("/order")
 public class OrderControllerTest {
 
     private OrderService orderService;

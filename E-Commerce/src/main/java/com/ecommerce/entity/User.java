@@ -1,6 +1,7 @@
 package com.ecommerce.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,9 +33,9 @@ public class User {
     private SignedInUser signedInUser;
 
     // Mapping to UserDetail
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private UserDetail userDetail;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.DETACH)
+    @JsonIgnoreProperties("user")
+    private UserDetail userDetail;
 
     // One-to-Many with Product
     @JsonIgnore
