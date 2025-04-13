@@ -1,6 +1,7 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.entity.User;
+import com.ecommerce.service.impl.AllUserServicesImpl;
 import com.ecommerce.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserControllerTest {
 
     private final UserServiceImpl userService;
+    private final AllUserServicesImpl allUserServices;
 
     @GetMapping
     public ResponseEntity<String> health() {
@@ -23,16 +25,18 @@ public class UserControllerTest {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody @Valid User user) {
-        User savedUser = userService.registerUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<Boolean> registerUser(@RequestBody @Valid User user) {
+        return new ResponseEntity<>(
+                allUserServices.registerUser(user),
+                HttpStatus.CREATED
+        );
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteUser(@RequestBody @Valid User user) {
         String userid = user.getUserid();
 
-        userService.removeUser(user);
+        allUserServices.removeUser(user);
         return new ResponseEntity<>(
                 "user deleted: " + userid,
                 HttpStatus.OK

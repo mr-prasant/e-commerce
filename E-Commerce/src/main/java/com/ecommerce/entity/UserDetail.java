@@ -16,6 +16,7 @@ public class UserDetail {
 
     @OneToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid")
+    @JsonIgnore
     private User user;
 
     @NotBlank(message = "Role cannot blank")
