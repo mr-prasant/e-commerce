@@ -1,6 +1,8 @@
 package com.ecommerce.utility;
 
 import com.ecommerce.exception.InvalidInputResourceException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -9,6 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class ServiceUtil {
+
+    private final PasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     // generating id
     public String generateId(String prefix) {
@@ -29,5 +33,9 @@ public class ServiceUtil {
         if (!("admin, user, admin").contains(role)) {
             throw new InvalidInputResourceException("Invalid role: " + role);
         }
+    }
+
+    public PasswordEncoder getEncoder() {
+        return encoder;
     }
 }

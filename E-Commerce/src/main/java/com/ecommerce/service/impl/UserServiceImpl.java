@@ -6,8 +6,10 @@ import com.ecommerce.exception.NullResourceException;
 import com.ecommerce.exception.ResourceAlreadyExistException;
 import com.ecommerce.exception.ResourceNotFoundException;
 import com.ecommerce.repository.UserRepository;
+import com.ecommerce.service.UserDetailService;
 import com.ecommerce.service.UserService;
 import com.ecommerce.utility.ServiceUtil;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,17 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ServiceUtil serviceUtil;
-
-    private final PasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
-    public UserServiceImpl(UserRepository userRepository, ServiceUtil serviceUtil) {
-        this.userRepository = userRepository;
-        this.serviceUtil = serviceUtil;
-    }
 
     @Override
     public User registerUser(User user) {
@@ -73,8 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeUser(User user) {
+    public User removeUser(User user) {
         clean(user); // cleaning the user data
+        System.out.println("user: " + user);
 
         if (!isAuthenticated(user)) {
             throw new ResourceNotFoundException("No user with userid: " + user.getUserid() + " found.");
@@ -82,33 +79,42 @@ public class UserServiceImpl implements UserService {
 
         User dbUser = getUser(user.getUserid());
 
-        String role = user.getRoles();
+        String role = clean(user.getRoles());
         serviceUtil.verifyUserRole(role);
 
         String[] dbRoles = dbUser.getRoles().split(",");
-        String updatedRole = "";
+        String updatedRole = "DELETED";
 
-        for (String dbRole: dbRoles) {
-            if (!dbRole.trim().equals(role)) {
-                updatedRole = dbRole.trim();
+        // soft delete of user; assigning role -> DELETED
+        switch (dbRoles.length) {
+            case 0 -> {
+                throw new NullResourceException("Trying to delete the invalid user: " + user.getUserid() + ".");
             }
-        }
 
-        if (updatedRole.equals(role)) {
-            throw new NullResourceException("Trying to delete the invalid role: " + role + "; not assigned.");
+            case 1 -> {
+                if (!dbRoles[0].trim().equalsIgnoreCase(role)) {
+                    throw new NullResourceException("Trying to delete the invalid role: " + role + "; not assigned.");
+                }
+            }
+
+            case 2 -> {
+                if (dbRoles[0].trim().equalsIgnoreCase(role)) {
+                    updatedRole = clean(dbRoles[1]);
+                } else if (dbRoles[1].trim().equalsIgnoreCase(role)) {
+                    updatedRole = clean(dbRoles[0]);
+                } else {
+                    throw new NullResourceException("Trying to delete the invalid role: " + role + "; not assigned.");
+                }
+            }
         }
 
         // TODO deleting related data
 
-        if (updatedRole.trim().isEmpty()) { // all roles are removed
-            userRepository.delete(user); // delete the user from database
+        user.setRoles(updatedRole);
+        user.setPassword(dbUser.getPassword());
 
-        } else { // update the new role to user
-            user.setRoles(updatedRole);
-            userRepository.save(user);
-        }
+        return userRepository.save(user);
     }
-
 
     @Override
     public User getUser(String userid) {
@@ -128,10 +134,6 @@ public class UserServiceImpl implements UserService {
                 && dbUser.getRoles().contains(user.getRoles())
         ) {
             return true;
-        }
-
-        if (dbUser == null) {
-            throw new ResourceNotFoundException("User with userid: " + user.getUserid() + " not found.");
         }
 
         return false;
@@ -157,11 +159,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean matchPassword(String password, String encPassword) {
-        return encoder.matches(password, encPassword);
+        return serviceUtil.getEncoder().matches(password, encPassword);
     }
 
     private String encodePassword(String password) {
-        return encoder.encode(password);
+        return serviceUtil.getEncoder().encode(password);
     }
 
 
@@ -170,6 +172,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private void clean(User user) {
+        if (user == null) {
+            user = new User();
+        }
+
         user.setUserid(clean(user.getUserid()));
         user.setRoles(clean(user.getRoles()));
         user.setPassword(user.getPassword().trim());

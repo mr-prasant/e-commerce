@@ -55,6 +55,14 @@ public class UserControllerTest {
         );
     }
 
+    @GetMapping("/{userid}")
+    public ResponseEntity<User> getUser(@PathVariable String userid) {
+        return new ResponseEntity<>(
+                userService.getUser(userid),
+                HttpStatus.FOUND
+        );
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         return new ResponseEntity<>(
