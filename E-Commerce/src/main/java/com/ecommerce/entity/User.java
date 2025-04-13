@@ -28,12 +28,12 @@ public class User {
     private String roles;
 
     // Mapping to SignedInUser
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.DETACH)
+    @JsonIgnoreProperties("user")
     private SignedInUser signedInUser;
 
     // Mapping to UserDetail
-    @OneToOne(mappedBy = "user", cascade = CascadeType.DETACH)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private UserDetail userDetail;
 

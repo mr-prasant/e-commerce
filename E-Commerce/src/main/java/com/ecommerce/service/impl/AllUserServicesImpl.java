@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 @Transactional
 @AllArgsConstructor
 public class AllUserServicesImpl implements AllUserServices {
+
     private UserServiceImpl userService;
     private UserDetailServiceImpl userDetailService;
+    private SignedInUserServiceImpl signedInUserService;
 
     @Override
     public boolean registerUser(User user) {
@@ -38,6 +40,7 @@ public class AllUserServicesImpl implements AllUserServices {
 
         System.out.println("delete: " + user);
 
+        // removing/updating user detail
         if (user.getRoles().equals("DELETED")) {
             userDetailService.removeUserDetail(userid);
         } else {
@@ -45,5 +48,8 @@ public class AllUserServicesImpl implements AllUserServices {
             userDetail.setRoles(user.getRoles());
             userDetailService.updateUserDetail(userid, userDetail);
         }
+
+        // removing signed in user data
+        signedInUserService.removeSignedInUser(userid);
     }
 }

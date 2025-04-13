@@ -1,7 +1,9 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.entity.SignedInUser;
 import com.ecommerce.entity.User;
 import com.ecommerce.service.impl.AllUserServicesImpl;
+import com.ecommerce.service.impl.SignedInUserServiceImpl;
 import com.ecommerce.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ public class UserControllerTest {
 
     private final UserServiceImpl userService;
     private final AllUserServicesImpl allUserServices;
+    private final SignedInUserServiceImpl signedInUserService;
 
     @GetMapping
     public ResponseEntity<String> health() {
@@ -53,9 +56,18 @@ public class UserControllerTest {
 
     @GetMapping("/signin")
     public ResponseEntity<Boolean> signIn(@RequestBody @Valid User user) {
+        if (user != null && userService.isAuthenticated(user)) {
+            return new ResponseEntity<>(signedInUserService.addSignedInUser(user) != null, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/signin/valid/{userid}")
+    public ResponseEntity<Boolean> signInValidity(@PathVariable String userid) {
         return new ResponseEntity<>(
-                userService.isAuthenticated(user),
-                HttpStatus.OK
+                !signedInUserService.isExpired(userid),
+                HttpStatus.ACCEPTED
         );
     }
 
