@@ -23,5 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     byte[] findImageByPid(String pid);
 
     int findIsAvailableByPid(String pid);
+
+//    List<Product> findAllByUserid(String userid);
 }
 

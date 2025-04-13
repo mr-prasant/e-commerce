@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(String pid, Product product) {
-        Product existingProduct = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        Product existingProduct = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
         existingProduct.setName(product.getName());
         existingProduct.setCategory(product.getCategory());
         existingProduct.setDetail(product.getDetail());
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProductPrice(String pid, Double price) {
-        Product existingProduct = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        Product existingProduct = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
         existingProduct.setPrice(price);
         return productRepository.save(existingProduct);
     }
@@ -53,32 +53,36 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProductQuantity(String pid, int quantity) {
-        Product existingProduct = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        Product existingProduct = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
         existingProduct.setQuantity(quantity);
         return productRepository.save(existingProduct);
     }
 
     @Override
     public List<Product> getAllProducts() {
+        int count = (int) productRepository.count();
+        if (count == 0) {
+            throw new ResourceNotFoundException("No product found.");
+        }
 
         return productRepository.findAll();
     }
 
     @Override
     public List<Product> getAllProductsByUserid(String userid) {
-        List<Product> productList = productRepository.findByUserUserid(userid);
-        if (productList == null || productList.isEmpty()) {
-            throw new ResourceNotFoundException("Product not found!");
-        }
+//        List<Product> productList = productRepository.findAllByUserid(userid);
+//        if (productList.isEmpty()) {
+//            throw new ResourceNotFoundException("No product with: " + userid  + " found.");
+//        }
 
-        return productList;
+        return null;
     }
 
     @Override
     public List<String> getAllProductCategory() {
         List<String> productList =productRepository.findAllCategories();
         if (productList == null) {
-            throw new ResourceNotFoundException("Product not found!");
+            throw new ResourceNotFoundException("No product found.");
         }
 
         return productList;
@@ -89,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
         category.trim().toLowerCase();
         List<Product> productList =productRepository.findAllByCategory(category);
         if (productList == null) {
-            throw new ResourceNotFoundException("Product not found!");
+            throw new ResourceNotFoundException("No product with: " + category  + " found.");
         }
 
         return productList;
@@ -100,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
         search.trim().toLowerCase();
         List<Product> productList =productRepository.findByNameContainingIgnoreCase(search);
         if (productList == null) {
-            throw new ResourceNotFoundException("Product not found!");
+            throw new ResourceNotFoundException("No product with: " + search  + " found.");
         }
 
         return productList;
@@ -108,12 +112,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(String pid) {
-        return productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        return productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
     }
 
     @Override
     public int getProductQuantity(String pid) {
         return productRepository.getQuantityByPid(pid);
+    }
+
+    @Override
+    public boolean setProductQuantity(String pid, int qty) {
+        Product product = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
+        product.setQuantity(qty);
+        productRepository.save(product);
+        return true;
     }
 
     @Override
@@ -123,7 +135,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void removeProduct(String pid) {
-        Product product = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
+        Product product = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
         product.setIsAvailable(0);
         productRepository.save(product);
     }
@@ -132,5 +144,12 @@ public class ProductServiceImpl implements ProductService {
     public boolean isProductAvailable(String pid) {
         int available = productRepository.findIsAvailableByPid(pid);
         return available == 1;
+    }
+
+    @Override
+    public void setProductAvailable(String pid, int qty) {
+        Product product = productRepository.findById(pid).orElseThrow(() -> new ResourceNotFoundException("No product with: " + pid  + " found."));
+        product.setIsAvailable(qty);
+        productRepository.save(product);
     }
 }
