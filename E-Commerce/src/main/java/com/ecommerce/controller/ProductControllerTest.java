@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/product")
-@AllArgsConstructor
 public class ProductControllerTest {
 
     ProductService productService;

@@ -8,6 +8,7 @@ import com.ecommerce.repository.UserDetailRepository;
 import com.ecommerce.service.UserDetailService;
 import com.ecommerce.utility.ServiceUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -117,16 +118,17 @@ public class UserDetailServiceImpl implements UserDetailService {
 
     private void clean(UserDetail userDetail) {
         System.out.println(userDetail);
-        userDetail.getUser().setUserid(clean(userDetail.getUser().getUserid()));
-        userDetail.setRoles(clean(userDetail.getRoles()));
-        userDetail.setName(clean(userDetail.getName()));
-        userDetail.setPhone(clean(userDetail.getPhone()));
-        userDetail.setAddress(userDetail.getAddress().trim());
 
         User user = userDetail.getUser();
         if (user == null) {
             user = new User();
         }
+
+        userDetail.getUser().setUserid(clean(user.getUserid()));
+        userDetail.setRoles(clean(userDetail.getRoles()));
+        userDetail.setPhone(clean(userDetail.getPhone()));
+        userDetail.setName(userDetail.getName().trim());
+        userDetail.setAddress(userDetail.getAddress().trim());
 
         user.setUserid(clean(user.getUserid()));
         user.setRoles(clean(user.getRoles()));
