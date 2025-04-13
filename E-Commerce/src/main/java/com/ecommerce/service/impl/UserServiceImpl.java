@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
         // getting the database user
         User dbUser = getUser(user.getUserid());
 
+        user.setUserDetail(null);
         // checking for existing user
         if (dbUser == null) {
-            user.setUserDetail(null);
             return userRepository.save(user);
         }
 
